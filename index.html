@@ -96,17 +96,33 @@ let selected='Todas';const cats=['Todas','Sono e conforto','Higiene e cuidados',
 const catIcons={'Todas':'🎁','Sono e conforto':'🌙','Higiene e cuidados':'🛁','Amamentação':'🍼','Brinquedos e desenvolvimento':'🚙','Organização':'🧺','Passeio e acessórios':'🧸'};const catNav=document.getElementById('categories'),grid=document.getElementById('grid'),search=document.getElementById('search'),shop=document.getElementById('shop');
 cats.forEach(cat=>{const b=document.createElement('button');b.type='button';b.className='chip'+(cat===selected?' active':'');b.textContent=catIcons[cat]+' '+cat;b.dataset.category=cat;b.setAttribute('aria-pressed',cat===selected?'true':'false');b.onclick=()=>{selected=cat;document.querySelectorAll('.chip').forEach(el=>{const active=el.dataset.category===cat;el.classList.toggle('active',active);el.setAttribute('aria-pressed',String(active))});render()};catNav.appendChild(b)});
 const giftPhotos={
-"Apoio para pescoço do bebê":"IMG_4106.webp",
-"Tapete infantil emborrachado":"IMG_4102.webp",
-"Ventilador portátil dobrável preto":"IMG_4104.webp",
-"Máquina de ruído branco":"IMG_4108.webp",
-"Luminária noturna":"IMG_4101.webp",
-"Cesto de roupa suja":"IMG_4105.webp",
-"Rosquinha de amamentação":"IMG_4099.webp",
-"Kit com 10 organizadores":"IMG_4103.webp",
-"Cueiro charutinho":"IMG_4107.webp",
-"Absorvente para seios":"IMG_4100.webp"
-};
+ "Apoio para pescoço do bebê": "IMG_4106.webp",
+ "Tapete infantil emborrachado": "IMG_4102.webp",
+ "Ventilador portátil dobrável preto": "IMG_4104.webp",
+ "Máquina de ruído branco": "IMG_4108.webp",
+ "Luminária noturna": "IMG_4101.webp",
+ "Cesto de roupa suja": "IMG_4105.webp",
+ "Rosquinha de amamentação": "IMG_4099.webp",
+ "Kit com 10 organizadores": "IMG_4103.webp",
+ "Cueiro charutinho": "IMG_4107.webp",
+ "Absorvente para seios": "IMG_4100.webp",
+ "Manta para enrolar recém-nascidos": "IMG_4142.webp",
+ "Kit com 7 babadores": "IMG_4139.webp",
+ "Protetores de ouvido": "IMG_4140.webp",
+ "Kit aspirador nasal": "IMG_4127.webp",
+ "Sabonete líquido Mustela": "IMG_4128.webp",
+ "Sabonete líquido Johnson's": "IMG_4136.webp",
+ "Mordedor sensorial": "IMG_4129.webp",
+ "Algodão Bera Cotton": "IMG_4134.webp",
+ "Xô Febre": "IMG_4138.webp",
+ "Xô Cólica": "IMG_4133.webp",
+ "Óleo essencial Acalme Seu Bebê": "IMG_4131.webp",
+ "Livrinho de contraste para banho": "IMG_4137.webp",
+ "Livrinho de contraste": "IMG_4135.webp",
+ "Outro livrinho de contraste": "IMG_4130.webp",
+ "Lenço umedecido": "IMG_4132.webp",
+ "Kit com 3 bolsas maternidade": "IMG_4141.webp"
+}
 function render(){grid.replaceChildren();const q=search.value.toLocaleLowerCase('pt-BR').trim();const found=products.filter(p=>(selected==='Todas'||p.category===selected)&&(!shop.value||p.store===shop.value)&&p.name.toLocaleLowerCase('pt-BR').includes(q));document.getElementById('count').textContent=found.length+' presentes';document.getElementById('empty').style.display=found.length?'none':'block';found.forEach(p=>{const card=document.createElement('article');card.className='card';const visual=document.createElement('div');visual.className='visual';if(giftPhotos[p.name]){visual.classList.add('has-photo');const photo=document.createElement('img');photo.className='product-photo';photo.src=giftPhotos[p.name];photo.alt='Foto real do produto: '+p.name;photo.loading='lazy';photo.decoding='async';photo.onerror=()=>{visual.classList.remove('has-photo');visual.innerHTML=icon+'<span>Presentinho do Jorge</span>'};visual.appendChild(photo);}else{visual.innerHTML=icon+'<span>Presentinho do Jorge</span>'};const body=document.createElement('div');body.className='body';const tag=document.createElement('div');tag.className='tag';tag.textContent=(catIcons[p.category]||'🎁')+' '+p.category+' · '+p.store;const title=document.createElement('h3');title.textContent=p.name;const link=document.createElement('button');link.type='button';link.className='cta';link.style.border='0';link.style.cursor='pointer';link.textContent='Ver presente ↗';link.onclick=()=>openGift(p,'before');const confirm=document.createElement('button');confirm.type='button';confirm.className='confirm-btn';confirm.textContent='💙 Já comprei';confirm.onclick=()=>openGift(p,'after');body.append(tag,title,link,confirm);card.append(visual,body);grid.appendChild(card)})}
 
 const modal=document.getElementById('giftModal'),giftTitle=document.getElementById('giftTitle'),giftText=document.getElementById('giftText'),giftActions=document.getElementById('giftActions'),giftQuantity=document.getElementById('giftQuantity'),giftQty=document.getElementById('giftQty');
