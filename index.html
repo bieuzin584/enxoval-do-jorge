@@ -67,9 +67,15 @@ search.addEventListener('input',render);shop.addEventListener('change',render);r
 const musicButton=document.getElementById('music');
 let audioContext=null,musicTimer=null,musicOn=false,step=0;
 const notes=[392,440,392,329.63,349.23,392,349.23,293.66,329.63,349.23,329.63,261.63,293.66,329.63,293.66,261.63];
-function playTone(freq){if(!audioContext)return;const at=audioContext.currentTime+0.02;const oscillator=audioContext.createOscillator(),gain=audioContext.createGain();oscillator.type='sine';oscillator.frequency.setValueAtTime(freq,at);gain.gain.setValueAtTime(0.0001,at);gain.gain.exponentialRampToValueAtTime(0.045,at+0.045);gain.gain.exponentialRampToValueAtTime(0.0001,at+0.66);oscillator.connect(gain);gain.connect(audioContext.destination);oscillator.start(at);oscillator.stop(at+0.69)}
-function nextNote(){if(!musicOn||!audioContext)return;playTone(notes[step%notes.length]);step++}
-async function toggleMusic(){if(musicOn){musicOn=false;clearInterval(musicTimer);musicTimer=null;if(audioContext)await audioContext.suspend();musicButton.textContent='♫ Ativar musiquinha';musicButton.setAttribute('aria-pressed','false');return}try{const Ctx=window.AudioContext||window.webkitAudioContext;if(!Ctx)throw Error('Sem suporte');if(!audioContext)audioContext=new Ctx();await audioContext.resume();musicOn=true;step=0;nextNote();musicTimer=setInterval(nextNote,720);musicButton.textContent='♫ Pausar musiquinha';musicButton.setAttribute('aria-pressed','true')}catch(e){musicOn=false;musicButton.textContent='Áudio indisponível'}}
+function playTone(freq){if(!audioContext)return;const at=audioContext.currentTime+0.035;const oscillator=audioContext.createOscillator(),gain=audioContext.createGain();oscillator.type='triangle';oscillator.frequency.setValueAtTime(freq,at);gain.gain.setValueAtTime(0.0001,at);gain.gain.exponentialRampToValueAtTime(0.16,at+0.07);gain.gain.exponentialRampToValueAtTime(0.0001,at+0.67);oscillator.connect(gain);gain.connect(audioContext.destination);oscillator.start(at);oscillator.stop(at+0.7)}
+function nextNote(){if(!musicOn||!audioContext||audioContext.state!=='running')return;playTone(notes[step%notes.length]);step++}
+function stopMusic(){musicOn=false;if(musicTimer!==null){clearInterval(musicTimer);musicTimer=null}musicButton.textContent='♫ Ativar musiquinha';musicButton.setAttribute('aria-pressed','false')}
+function toggleMusic(){if(musicOn){stopMusic();if(audioContext)audioContext.suspend().catch(()=>{});return}
+try{const Ctx=window.AudioContext||window.webkitAudioContext;if(!Ctx)throw Error('Sem suporte de áudio');if(!audioContext)audioContext=new Ctx();musicOn=true;step=0;musicButton.textContent='♫ Pausar musiquinha';musicButton.setAttribute('aria-pressed','true');
+/* Retomar o áudio diretamente no gesto do usuário é necessário no iOS. */
+const resumed=audioContext.resume();playTone(notes[0]);step=1;
+Promise.resolve(resumed).then(()=>{if(!musicOn)return;if(musicTimer!==null)clearInterval(musicTimer);musicTimer=setInterval(nextNote,720)}).catch(()=>{stopMusic();musicButton.textContent='Não foi possível tocar'});
+}catch(e){stopMusic();musicButton.textContent='Áudio indisponível'}}
 musicButton.addEventListener('click',toggleMusic);
-document.addEventListener('visibilitychange',()=>{if(document.hidden&&musicOn)toggleMusic()});
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&musicOn){stopMusic();if(audioContext)audioContext.suspend().catch(()=>{})}});
 </script></body></html>
