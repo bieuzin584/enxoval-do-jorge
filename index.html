@@ -72,14 +72,14 @@ main{max-width:1100px;margin:auto;padding:29px 18px 65px}.intro{display:flex;jus
 .card .visual{height:145px}.card .visual svg{width:49px;height:49px}
 @media(max-width:760px){.music-control{position:static;right:auto;bottom:auto;margin:10px auto 0;font-size:13px}.hero-icon{font-size:65px}.baby-scene{font-size:25px;gap:13px}.baby-scene span:nth-child(2){font-size:35px}.card .visual{height:113px}.card .visual svg{width:40px;height:40px}.hero .share-button{margin-top:16px}}
 
-/* Fundo infantil suave em toda a página, sempre atrás do conteúdo */
-body{background-color:#f4f9fc;background-image:radial-gradient(circle at 12% 18%,#d7eafa77 0 95px,transparent 96px),radial-gradient(circle at 87% 42%,#e6e0d755 0 110px,transparent 111px),radial-gradient(circle at 16% 79%,#d6edf077 0 85px,transparent 86px),radial-gradient(circle at 80% 93%,#dceafa88 0 130px,transparent 131px),linear-gradient(160deg,#f3f9fd,#fffdfa 52%,#f1f8fc);background-attachment:fixed}
+/* Fundo Jorge nas Nuvens: padrões visíveis e SEM sobrepor conteúdo */
+body{background-color:#e6f2fa;background-image:radial-gradient(circle at 10% 20%,#c7e1f4 0 65px,transparent 67px),radial-gradient(circle at 88% 68%,#d0e7f7 0 90px,transparent 92px),linear-gradient(155deg,#e7f3fc,#f3f9fd 55%,#e5f1f9)}
 main{position:relative;isolation:isolate}
-main:before{content:"☁  ✦  ☁  ✧  ☁  ✦  ☁";position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden;white-space:pre-wrap;word-spacing:clamp(32px,12vw,160px);line-height:300px;font-size:clamp(24px,5vw,50px);color:#b8d8e9;opacity:.22;user-select:none}
+main:before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.62;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='360' viewBox='0 0 320 360'%3E%3Cg fill='%23ffffff'%3E%3Cpath d='M32 86c-16 0-22-19-11-29 5-5 11-6 17-4 5-19 32-21 41-4 18-3 31 12 28 26-2 7-9 11-18 11z'/%3E%3Cpath d='M209 267c-14 0-20-15-11-24 5-5 10-6 16-5 6-17 29-18 37-3 15-3 27 9 25 21-1 7-7 11-16 11z'/%3E%3C/g%3E%3Cg fill='%2398c7e4'%3E%3Cpath d='M243 68l4 10 10 4-10 4-4 10-4-10-10-4 10-4z'/%3E%3Cpath d='M90 239l3 8 8 3-8 3-3 8-3-8-8-3 8-3z'/%3E%3Ccircle cx='162' cy='134' r='3'/%3E%3Ccircle cx='291' cy='177' r='3'/%3E%3Ccircle cx='40' cy='322' r='3'/%3E%3C/g%3E%3C/svg%3E");background-repeat:repeat;background-size:320px 360px}
 .card,.theme-strip,.toolbar input,.toolbar select,.chip,.notice{position:relative;z-index:1}
-.hero{background:linear-gradient(155deg,#d9ecf8ed 0%,#eff8fcef 62%,#fdfaf4ef 100%)}
-.footer{position:relative;background-color:#eaf4f9ed}
-@media(max-width:760px){body{background-attachment:scroll}main:before{line-height:250px;font-size:26px;opacity:.15}}
+.hero{background:linear-gradient(155deg,#d9ecf8 0%,#eff8fc 62%,#fdfaf4 100%)}
+.footer{position:relative;background-color:#e0eff8}
+@media(max-width:760px){main:before{opacity:.72;background-size:240px 270px}}
 </style></head>
 <body>
 <header class="hero"><span class="decor d1" aria-hidden="true">☁️</span><span class="decor d2" aria-hidden="true">🚙</span><span class="decor d3" aria-hidden="true">🧸</span><span class="decor d4" aria-hidden="true">⭐</span><div class="hero-inner"><span class="eyebrow">Nossa lista de amor</span><div class="hero-icon">🧸</div><div class="baby-scene" aria-hidden="true"><span>☁️</span><span>🚙</span><span>⭐</span><span>🍼</span><span>☁️</span></div><h1>Enxoval do Jorge</h1><p>Um novo amor está chegando! Reunimos aqui alguns presentinhos escolhidos com muito carinho para o nosso pequeno. 💙</p><div class="hero-stats"><span class="pill">🎁 26 presentinhos</span><span class="pill">💙 Escolhidos com amor</span></div><span class="hero-message">Cada presentinho é uma forma de fazer parte da nossa história. Obrigado por tanto carinho! ✨</span><button class="share-button" type="button" id="shareSite">💌 Compartilhar com a família</button><div><button type="button" id="music" class="music-control" aria-pressed="false">♫ Ativar musiquinha</button></div></div></header>
