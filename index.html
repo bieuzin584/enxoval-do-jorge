@@ -149,4 +149,48 @@ Promise.resolve(resumed).then(()=>{if(!musicOn)return;if(musicTimer!==null)clear
 }catch(e){stopMusic();musicButton.textContent='Áudio indisponível'}}
 musicButton.addEventListener('click',toggleMusic);
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&musicOn){stopMusic();if(audioContext)audioContext.suspend().catch(()=>{})}});
+
+/* Contador privado: nenhuma contagem é exibida aos visitantes. */
+(function(){
+ const KEY='jorge-admin-v1';
+ const SESSION='jorge-counted-session-v1';
+ const ENDPOINT='https://countapi.mileshilliard.com/api/v1/';
+ const COUNTER='enxoval-do-jorge-bieuzin584-visitas-2026';
+ const expected='198859c145481188fada1d5da03d638d6a511a4bb0015635b7a0cf4200f33698';
+ const params=new URLSearchParams(location.search);
+ const adminToken=params.get('admin');
+ async function sha256(value){
+  const bytes=new TextEncoder().encode(value);
+  const digest=await crypto.subtle.digest('SHA-256',bytes);
+  return Array.from(new Uint8Array(digest),b=>b.toString(16).padStart(2,'0')).join('');
+ }
+ async function getNumber(mode){
+  const response=await fetch(ENDPOINT+mode+'/'+COUNTER,{cache:'no-store'});
+  if(!response.ok)throw new Error('Contador indisponível');
+  const data=await response.json();
+  if(!Number.isFinite(Number(data.value)))throw new Error('Valor inválido');
+  return Number(data.value);
+ }
+ function showAdmin(){
+  const panel=document.createElement('div');
+  panel.setAttribute('aria-live','polite');
+  panel.style.cssText='position:fixed;bottom:14px;right:14px;z-index:1000;background:#fff;color:#345c74;border:1px solid #d6e5ed;border-radius:15px;padding:12px 15px;box-shadow:0 8px 30px #26485d20;font:600 13px system-ui;max-width:calc(100vw - 28px)';
+  panel.textContent='💙 Visitas: carregando...';
+  document.body.appendChild(panel);
+  getNumber('get').then(n=>panel.textContent='👁 '+n.toLocaleString('pt-BR')+' visitas registradas · Admin').catch(()=>panel.textContent='💙 Contador indisponível no momento');
+ }
+ async function start(){
+  let isAdmin=localStorage.getItem(KEY)==='1';
+  if(adminToken){
+   try{if(await sha256(adminToken)===expected){localStorage.setItem(KEY,'1');isAdmin=true}}catch(e){}
+   params.delete('admin');
+   const clean=location.pathname+(params.toString()?'?'+params.toString():'')+location.hash;
+   history.replaceState(null,'',clean);
+  }
+  if(isAdmin){showAdmin();return}
+  if(sessionStorage.getItem(SESSION)==='1')return;
+  try{await getNumber('hit');sessionStorage.setItem(SESSION,'1')}catch(e){}
+ }
+ start();
+})();
 </script></body></html>
