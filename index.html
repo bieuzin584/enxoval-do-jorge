@@ -106,9 +106,9 @@ const giftPhotos={
  "Kit com 10 organizadores": "IMG_4103.webp",
  "Cueiro charutinho": "IMG_4107.webp",
  "Absorvente para seios": "IMG_4100.webp",
- "Manta para enrolar recém-nascidos": "IMG_4142.webp",
- "Kit com 7 babadores": "IMG_4139.webp",
- "Protetores de ouvido": "IMG_4140.webp",
+ "Manta para enrolar recém-nascidos": "IMG_4141.webp",
+ "Kit com 7 babadores": "IMG_4140.webp",
+ "Protetores de ouvido": "IMG_4139.webp",
  "Kit aspirador nasal": "IMG_4127.webp",
  "Sabonete líquido Mustela": "IMG_4128.webp",
  "Sabonete líquido Johnson's": "IMG_4136.webp",
@@ -121,7 +121,7 @@ const giftPhotos={
  "Livrinho de contraste": "IMG_4135.webp",
  "Outro livrinho de contraste": "IMG_4130.webp",
  "Lenço umedecido": "IMG_4132.webp",
- "Kit com 3 bolsas maternidade": "IMG_4141.webp"
+ "Kit com 3 bolsas maternidade": "IMG_4142.webp"
 }
 function render(){grid.replaceChildren();const q=search.value.toLocaleLowerCase('pt-BR').trim();const found=products.filter(p=>(selected==='Todas'||p.category===selected)&&(!shop.value||p.store===shop.value)&&p.name.toLocaleLowerCase('pt-BR').includes(q));document.getElementById('count').textContent=found.length+' presentes';document.getElementById('empty').style.display=found.length?'none':'block';found.forEach(p=>{const card=document.createElement('article');card.className='card';const visual=document.createElement('div');visual.className='visual';if(giftPhotos[p.name]){visual.classList.add('has-photo');const photo=document.createElement('img');photo.className='product-photo';photo.src=giftPhotos[p.name];photo.alt='Foto real do produto: '+p.name;photo.loading='lazy';photo.decoding='async';photo.onerror=()=>{visual.classList.remove('has-photo');visual.innerHTML=icon+'<span>Presentinho do Jorge</span>'};visual.appendChild(photo);}else{visual.innerHTML=icon+'<span>Presentinho do Jorge</span>'};const body=document.createElement('div');body.className='body';const tag=document.createElement('div');tag.className='tag';tag.textContent=(catIcons[p.category]||'🎁')+' '+p.category+' · '+p.store;const title=document.createElement('h3');title.textContent=p.name;const link=document.createElement('button');link.type='button';link.className='cta';link.style.border='0';link.style.cursor='pointer';link.textContent='Ver presente ↗';link.onclick=()=>openGift(p,'before');const confirm=document.createElement('button');confirm.type='button';confirm.className='confirm-btn';confirm.textContent='💙 Já comprei';confirm.onclick=()=>openGift(p,'after');body.append(tag,title,link,confirm);card.append(visual,body);grid.appendChild(card)})}
 
